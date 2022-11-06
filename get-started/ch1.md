@@ -1,4 +1,4 @@
-# You Don't Know JS Yet: Get Started - 2nd Edition
+# I Know JS Yet: Get Started - 1st Edition
 # Chapter 1: What *Is* JavaScript?
 
 You don't know JS, yet. Neither do I, not fully anyway. None of us do. But we can all start getting to know JS better.

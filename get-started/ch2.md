@@ -1,4 +1,4 @@
-# You Don't Know JS Yet: Get Started - 2nd Edition
+# I Know JS Yet: Get Started - 1st Edition
 # Chapter 2: Surveying JS
 
 The best way to learn JS is to start writing JS.
