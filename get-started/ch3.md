@@ -103,6 +103,8 @@ console.log(`
   ${it.next().done}   // true
 `);
 
+// Test # 5
+
 console.log(`
   ${it.next().value}  // one
   ${it.next().value}  // two
