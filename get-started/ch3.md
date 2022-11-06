@@ -53,25 +53,28 @@ JavaScript, as part of ECMAScript 6, supports the iterator pattern with any obje
 
 ```js
 function reverseArrayIterator(array) {
-  var index = array.length - 1;
+  var index = array.length - 1
   return {
     next: () =>
-      index >= 0
-        ? { value: array[index--], done: false }
-        : { done: true },
-    };
+      index >= 0 ? { value: array[index--], done: false } : { done: true },
+  }
 }
 
-const it = reverseArrayIterator(["three", "two", "one"]);
+const it = reverseArrayIterator(["three", "two", "one"])
 
-// try the test that you want it. 
+// try the test that you want it.
 // but just one at time or after be done values will be undefined and done will be allready done
 
+// // Test # 0
+
+// console.log(it) //-> { next: [Function: next] }
+// console.log(it.next()) //-> { value: 'one', done: false }
+
 // Test # 1
-console.log(it.next().value); //-> 'one'
-console.log(it.next().value); //-> 'two'
-console.log(it.next().value); //-> 'three'
-console.log(`Are you done? ${it.next().done}`); //-> true
+console.log(it.next().value) //-> 'one'
+console.log(it.next().value) //-> 'two'
+console.log(it.next().value) //-> 'three'
+console.log(`Are you done? ${it.next().done}`) //-> true
 
 // Test # 2
 console.log(`
@@ -81,7 +84,7 @@ console.log(`
   ${it.next().value} // undefined
   ${it.next().done}  // true
   ${it.next().done}  // true
-`); 
+`)
 
 // Test # 3
 
@@ -92,7 +95,7 @@ console.log(`
   ${it.next().value}  // undefined
   ${it.next().done}   // true
   ${it.next().done}   // true
-`);
+`)
 
 // Test # 4
 
@@ -101,7 +104,7 @@ console.log(`
   ${it.next().value}  // two
   ${it.next().value}  // three
   ${it.next().done}   // true
-`);
+`)
 
 // Test # 5
 
@@ -110,7 +113,8 @@ console.log(`
   ${it.next().value}  // two
   ${it.next().value}  // three
   ${it.next().done}   // true
-`);
+`)
+
 ```
 
 Most of the time, though, it is desirable to provide Iterator[6] semantics on objects so that they can be iterated automatically via for...of loops. Some of JavaScript's built-in types such as Array, Map, or Set already define their own iteration behavior. The same effect can be achieved by defining an object's meta @@iterator method, also referred to by Symbol.iterator. This creates an Iterable object.
@@ -121,19 +125,27 @@ Here's an example of a range function that generates a list of values starting f
 function range(start, end) {
   return {
     [Symbol.iterator]() {
-      // #A
-      return this;
+      return this;  // #A
     },
     next() {
-      return start < end 
-        ? { value: start++, done: false }; // #B
-        : { done: true, value: end }; // #B
+      return start <= end 
+        ? { value: start++, done: false } // #B
+        : { done: true, value: end } // #B
     },
   };
 }
+// Test # 1
+
+console.log(range(1,4)) 
+// {
+//   next: [Function: next],
+//   [Symbol(Symbol.iterator)]: [Function: [Symbol.iterator]]
+// }
+
+// Test # 2
 
 for (number of range(1, 5)) {
-    console.log(number); // -> 1, 2, 3, 4
+    console.log(number); // -> 1, 2, 3, 4, 5
 }
 ```
 
@@ -141,8 +153,11 @@ The iteration mechanism of built-in types, like strings, can also be manipulated
 
 ```js
 let iter = ["I", "t", "e", "r", "a", "t", "o", "r"][Symbol.iterator]();
-iter.next().value; //-> I
-iter.next().value; //-> t
+
+console.log(iter) // Object [Array Iterator] {}
+console.log(iter.next()) // { value: 'I', done: false }
+console.log(iter.next().value) // t
+console.log(iter.next().value) // e
 ```
 
 ### Consuming Iterators
@@ -302,13 +317,16 @@ Consider:
 
 ```js
 function greeting(msg) {
-    return function who(name) {
-        console.log(`${msg}, ${name}!`);
-    };
+  return function who(name) {
+      console.log(`${ msg }, ${ name }!`);
+  };
 }
 
 var hello = greeting("Hello");
 var howdy = greeting("Howdy");
+
+console.log(hello) // [Function: who]
+console.log(howdy) // [Function: who]
 
 hello("Kyle");
 // Hello, Kyle!
@@ -328,22 +346,22 @@ These closures are not a snapshot of the `msg` variable's value; they are a dire
 
 ```js
 function counter(step = 1) {
-    var count = 0;
-    return function increaseCount() {
-        count = count + step;
-        return count;
-    };
+  var count = 0;
+  return function increaseCount(){
+      count = count + step;
+      console.log(count)
+      return count;
+  };
 }
 
 var incBy1 = counter(1);
 var incBy3 = counter(3);
 
-incBy1(); // 1
-incBy1(); // 2
-
-incBy3(); // 3
-incBy3(); // 6
-incBy3(); // 9
+incBy1();       // 1
+incBy1();       // 2
+incBy3();       // 3
+incBy3();       // 6
+incBy3();       // 9
 ```
 
 Each instance of the inner `increaseCount()` function is closed over both the `count` and `step` variables from its outer `counter(..)` function's scope. `step` remains the same over time, but `count` is updated on each invocation of that inner function. Since closure is over the variables and not just snapshots of the values, these updates are preserved.
@@ -451,6 +469,32 @@ A third way to invoke a function is with the `call(..)` method, which takes an o
 The same context-aware function invoked three different ways, gives different answers each time for what object `this` will reference.
 
 The benefit of `this`-aware functions—and their dynamic context—is the ability to more flexibly re-use a single function with data from different objects. A function that closes over a scope can never reference a different scope or set of variables. But a function that has dynamic `this` context awareness can be quite helpful for certain tasks.
+
+```js
+function classroom(teacher) {
+  return function study() {
+      console.log(
+          `${ teacher } says to study ${ this.topic }`
+      );
+  };
+}
+
+var assignment = classroom("Kyle");
+
+var homework = {
+  topic: "JS",
+  assignment: assignment
+};
+
+homework.assignment();  // Kyle says to study JS
+
+
+var otherHomework = {
+  topic: "Math"
+};
+
+assignment.call(otherHomework); // Kyle says to study Math
+```
 
 ## Prototypes
 
@@ -580,13 +624,3 @@ The two objects `jsHomework` and `mathHomework` each prototype link to the singl
 The preceding code snippet would be far less useful if `this` was resolved to `homework`. Yet, in many other languages, it would seem `this` would be `homework` because the `study()` method is indeed defined on `homework`.
 
 Unlike many other languages, JS's `this` being dynamic is a critical component of allowing prototype delegation, and indeed `class`, to work as expected!
-
-## Asking "Why?"
-
-The intended take-away from this chapter is that there's a lot more to JS under the hood than is obvious from glancing at the surface.
-
-As you are _getting started_ learning and knowing JS more closely, one of the most important skills you can practice and bolster is curiosity, and the art of asking "Why?" when you encounter something in the language.
-
-Even though this chapter has gone quite deep on some of the topics, many details have still been entirely skimmed over. There's much more to learn here, and the path to that starts with you asking the _right_ questions of your code. Asking the right questions is a critical skill of becoming a better developer.
-
-In the final chapter of this book, we're going to briefly look at how JS is divided, as covered across the rest of the _You Don't Know JS Yet_ book series. Also, don't skip Appendix B of this book, which has some practice code to review some of the main topics covered in this book.
