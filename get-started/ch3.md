@@ -53,22 +53,62 @@ JavaScript, as part of ECMAScript 6, supports the iterator pattern with any obje
 
 ```js
 function reverseArrayIterator(array) {
-    var index = array.length - 1;
-    return {
-        next: () =>
-            index >= 0
-                ? { value: array[index--], done: false }
-                : { done: true },
+  var index = array.length - 1;
+  return {
+    next: () =>
+      index >= 0
+        ? { value: array[index--], done: false }
+        : { done: true },
     };
 }
 
 const it = reverseArrayIterator(["three", "two", "one"]);
 
+// try the test that you want it. 
+// but just one at time or after be done values will be undefined and done will be allready done
+
+// Test # 1
 console.log(it.next().value); //-> 'one'
 console.log(it.next().value); //-> 'two'
 console.log(it.next().value); //-> 'three'
-
 console.log(`Are you done? ${it.next().done}`); //-> true
+
+// Test # 2
+console.log(`
+  ${it.next().value} // one
+  ${it.next().value} // two
+  ${it.next().value} // three 
+  ${it.next().value} // undefined
+  ${it.next().done}  // true
+  ${it.next().done}  // true
+`); 
+
+// Test # 3
+
+console.log(`
+  ${it.next().done}   // false
+  ${it.next().value}  // two
+  ${it.next().value}  // three
+  ${it.next().value}  // undefined
+  ${it.next().done}   // true
+  ${it.next().done}   // true
+`);
+
+// Test # 4
+
+console.log(`
+  ${it.next().done}   // false
+  ${it.next().value}  // two
+  ${it.next().value}  // three
+  ${it.next().done}   // true
+`);
+
+console.log(`
+  ${it.next().value}  // one
+  ${it.next().value}  // two
+  ${it.next().value}  // three
+  ${it.next().done}   // true
+`);
 ```
 
 Most of the time, though, it is desirable to provide Iterator[6] semantics on objects so that they can be iterated automatically via for...of loops. Some of JavaScript's built-in types such as Array, Map, or Set already define their own iteration behavior. The same effect can be achieved by defining an object's meta @@iterator method, also referred to by Symbol.iterator. This creates an Iterable object.
@@ -77,18 +117,17 @@ Here's an example of a range function that generates a list of values starting f
 
 ```js
 function range(start, end) {
-    return {
-        [Symbol.iterator]() {
-            // #A
-            return this;
-        },
-        next() {
-            if (start < end) {
-                return { value: start++, done: false }; // #B
-            }
-            return { done: true, value: end }; // #B
-        },
-    };
+  return {
+    [Symbol.iterator]() {
+      // #A
+      return this;
+    },
+    next() {
+      return start < end 
+        ? { value: start++, done: false }; // #B
+        : { done: true, value: end }; // #B
+    },
+  };
 }
 
 for (number of range(1, 5)) {
