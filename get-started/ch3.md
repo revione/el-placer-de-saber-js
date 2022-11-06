@@ -1,4 +1,4 @@
-# I Know JS Yet: Get Started - 1st Edition
+# I Know JS: Get Started - 1st Edition
 
 # Chapter 3: Digging to the Roots of JS
 
@@ -39,24 +39,28 @@ The protocol defines a `next()` method whose return is an object called an _iter
 the object has `value` and `done` properties,
 where `done` is a boolean that is `false` until the iteration over the underlying data source is complete.
 
-JavaScript
+
+
+### JavaScript other definition Definition -- check this for edition
 JavaScript, as part of ECMAScript 6, supports the iterator pattern with any object that provides a next() method, which returns an object with two specific properties: done and value. Here's an example that shows a reverse array iterator:
 
 ```js
 function reverseArrayIterator(array) {
-    var index = array.length - 1;
-    return {
-        next: () =>
-            index >= 0
-                ? { value: array[index--], done: false }
-                : { done: true },
-    };
+  var index = array.length - 1;
+  return {
+    next: () =>
+    index >= 0
+    ? { value: array[index--], done: false }
+    : { done: true },
+  };
 }
 
 const it = reverseArrayIterator(["three", "two", "one"]);
+
 console.log(it.next().value); //-> 'one'
 console.log(it.next().value); //-> 'two'
 console.log(it.next().value); //-> 'three'
+
 console.log(`Are you done? ${it.next().done}`); //-> true
 ```
 
@@ -82,8 +86,11 @@ function range(start, end) {
 for (number of range(1, 5)) {
   console.log(number);   // -> 1, 2, 3, 4
 }
+```
+
 The iteration mechanism of built-in types, like strings, can also be manipulated:
 
+```js
 let iter = ['I', 't', 'e', 'r', 'a', 't', 'o', 'r'][Symbol.iterator]();
 iter.next().value; //-> I
 iter.next().value; //-> t

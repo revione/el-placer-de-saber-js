@@ -1,4 +1,4 @@
-# I Know JS Yet: Get Started - 1st Edition
+# I Know JS: Get Started - 1st Edition
 # Appendix B: Practice, Practice, Practice!
 
 In this appendix, we'll explore some exercises and their suggested solutions. These are just to *get you started* with practice over the concepts from the book.

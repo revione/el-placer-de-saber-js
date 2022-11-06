@@ -1,4 +1,4 @@
-# I Know JS Yet: Get Started - 1st Edition
+# I Know JS: Get Started - 1st Edition
 
 ## Table of Contents
 

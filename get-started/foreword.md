@@ -1,4 +1,4 @@
-# I Know JS Yet: Get Started - 1st Edition
+# I Know JS: Get Started - 1st Edition
 # Foreword
 
 The first time I saw a tweet advertising the crowdfunding campaign for the original book series *You Don't Know JS*, I thought to myself that whoever the hell this Kyle Simpson is can get bent. Of course I know JavaScript! At the time I had been working in JavaScript for many years with some of tech's biggest names, so I felt justified in looking down my nose at this sweeping claim.
