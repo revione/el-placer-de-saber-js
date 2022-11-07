@@ -14,7 +14,9 @@ function reverseArrayIterator(array) {
   var index = array.length - 1
   return {
     next: () =>
-      index >= 0 ? { value: array[index--], done: false } : { done: true },
+      index >= 0 
+        ? { value: array[index--], done: false } 
+        : { done: true },
   }
 }
 
@@ -145,59 +147,48 @@ console.log([...it]) //  [ 0, 1, 2, 3 ]
 
 ```
 
-| NOTE:                                                                                                  |
-| :----------------------------------------------------------------------------------------------------- |
-| We'll omit the manual loop equivalent here, but it's definitely less readable than the `for..of` loop! |
+### Spred Operator
 
-Another mechanism that's often used for consuming iterators is the `...` operator. This operator actually has two symmetrical forms: _spread_ and _rest_ (or _gather_, as I prefer). The _spread_ form is an iterator-consumer.
-
-To _spread_ an iterator, you have to have _something_ to spread it into. There are two possibilities in JS: an array or an argument list for a function call.
-
-An array spread:
+the iterator-spread form of __`...`__ follows the iterator-consumption protocol to retrieve all available values from an receiving context.
 
 ```js
-// given an iterator of some data source:
-var it = [0, 1, 2, 3]
+// Make an array
+var TheArray = [0, 1, 2, 3]
 
-// loop over its results one at a time
-for (let val of it) {
-  console.log(`Iterator value: ${val}`)
-}
-// Iterator value: 0
-// Iterator value: 1
-// Iterator value: 2
-// Iterator value: 3
-
-var vals = [...it]
-
-console.log(vals)     // [ 0, 1, 2, 3 ]
-console.log([...it]) //  [ 0, 1, 2, 3 ]
-
-// A function call spread:
-// spread an iterator into a function,
-// call with each iterated value
-// occupying an argument position.
-logArguments(...it);
+// spred 
+logArguments(...TheArray);
 
 function logArguments() {
+  // Arguments:
   console.log(arguments) // [Arguments] { '0': 0, '1': 1, '2': 2, '3': 3 }
+
+  // The arguments object is a local variable available within all non-arrow functions. 
+  // Refer inside the function by using arguments word.
+  // arguments has entries for each argument the function was called with, with the first entry's index at 0.
+  console.log(arguments[0]) 
+
+  const TheArguments = [...arguments]
+  
+  // spred the arguments incoming
+  console.log(TheArguments) // 0 1 2 3 
 }
-
-var greeting = "Hello world!";
-var chars = [...greeting];
 ```
-
-In both cases, the iterator-spread form of `...` follows the iterator-consumption protocol (the same as the `for..of` loop) to retrieve all available values from an iterator and place (aka, spread) them into the receiving context (array, argument list).
 
 ### Iterables
 
-The iterator-consumption protocol is technically defined for consuming _iterables_; an iterable is a value that can be iterated over.
+The iterator-consumption protocol is technically defined for consuming _iterables_; 
+an iterable is a value that can be iterated over.
 
-The protocol automatically creates an iterator instance from an iterable, and consumes _just that iterator instance_ to its completion. This means a single iterable could be consumed more than once; each time, a new iterator instance would be created and used.
+The protocol automatically creates an iterator instance from an iterable, 
+and consumes _just that iterator instance_ to its completion. 
+
+This means a single iterable could be consumed more than once; each time, a new iterator instance would be created and used.
 
 So where do we find iterables?
 
-ES6 defined the basic data structure/collection types in JS as iterables. This includes strings, arrays, maps, sets, and others.
+ES6 defined the basic data structure/collection types in JS as iterables. 
+
+This includes strings, arrays, maps, sets, and others.
 
 Consider:
 
@@ -225,9 +216,7 @@ We can also iterate the characters in a string one at a time:
 var greeting = "Hello world!";
 var chars = [...greeting];
 
-chars;
-// [ "H", "e", "l", "l", "o", " ",
-//   "w", "o", "r", "l", "d", "!" ]
+console.log(chars)
 ```
 
 A `Map` data structure uses objects as keys, associating a value (of any type) with that object. Maps have a different default iteration than seen here, in that the iteration is not just over the map's values but instead its _entries_. An _entry_ is a tuple (2-element array) including both a key and a value.
@@ -281,105 +270,7 @@ Beyond just using built-in iterables, you can also ensure your own data structur
 | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | You may have noticed a nuanced shift that occurred in this discussion. We started by talking about consuming **iterators**, but then switched to talking about iterating over **iterables**. The iteration-consumption protocol expects an _iterable_, but the reason we can provide a direct _iterator_ is that an iterator is just an iterable of itself! When creating an iterator instance from an existing iterator, the iterator itself is returned. |
 
-## Closure
 
-Perhaps without realizing it, almost every JS developer has made use of closure. In fact, closure is one of the most pervasive programming functionalities across a majority of languages. It might even be as important to understand as variables or loops; that's how fundamental it is.
-
-Yet it feels kind of hidden, almost magical. And it's often talked about in either very abstract or very informal terms, which does little to help us nail down exactly what it is.
-
-We need to be able to recognize where closure is used in programs, as the presence or lack of closure is sometimes the cause of bugs (or even the cause of performance issues).
-
-So let's define closure in a pragmatic and concrete way:
-
-> Closure is when a function remembers and continues to access variables from outside its scope, even when the function is executed in a different scope.
-
-We see two definitional characteristics here. First, closure is part of the nature of a function. Objects don't get closures, functions do. Second, to observe a closure, you must execute a function in a different scope than where that function was originally defined.
-
-Consider:
-
-```js
-function greeting(msg) {
-  return function who(name) {
-      console.log(`${ msg }, ${ name }!`);
-  };
-}
-
-var hello = greeting("Hello");
-var howdy = greeting("Howdy");
-
-console.log(hello) // [Function: who]
-console.log(howdy) // [Function: who]
-
-hello("Kyle");
-// Hello, Kyle!
-
-hello("Sarah");
-// Hello, Sarah!
-
-howdy("Grant");
-// Howdy, Grant!
-```
-
-First, the `greeting(..)` outer function is executed, creating an instance of the inner function `who(..)`; that function closes over the variable `msg`, which is the parameter from the outer scope of `greeting(..)`. When that inner function is returned, its reference is assigned to the `hello` variable in the outer scope. Then we call `greeting(..)` a second time, creating a new inner function instance, with a new closure over a new `msg`, and return that reference to be assigned to `howdy`.
-
-When the `greeting(..)` function finishes running, normally we would expect all of its variables to be garbage collected (removed from memory). We'd expect each `msg` to go away, but they don't. The reason is closure. Since the inner function instances are still alive (assigned to `hello` and `howdy`, respectively), their closures are still preserving the `msg` variables.
-
-These closures are not a snapshot of the `msg` variable's value; they are a direct link and preservation of the variable itself. That means closure can actually observe (or make!) updates to these variables over time.
-
-```js
-function counter(step = 1) {
-  var count = 0;
-  return function increaseCount(){
-      count = count + step;
-      console.log(count)
-      return count;
-  };
-}
-
-var incBy1 = counter(1);
-var incBy3 = counter(3);
-
-incBy1();       // 1
-incBy1();       // 2
-incBy3();       // 3
-incBy3();       // 6
-incBy3();       // 9
-```
-
-Each instance of the inner `increaseCount()` function is closed over both the `count` and `step` variables from its outer `counter(..)` function's scope. `step` remains the same over time, but `count` is updated on each invocation of that inner function. Since closure is over the variables and not just snapshots of the values, these updates are preserved.
-
-Closure is most common when working with asynchronous code, such as with callbacks. Consider:
-
-```js
-function getSomeData(url) {
-    ajax(url, function onResponse(resp) {
-        console.log(`Response (from ${url}): ${resp}`);
-    });
-}
-
-getSomeData("https://some.url/wherever");
-// Response (from https://some.url/wherever): ...
-```
-
-The inner function `onResponse(..)` is closed over `url`, and thus preserves and remembers it until the Ajax call returns and executes `onResponse(..)`. Even though `getSomeData(..)` finishes right away, the `url` parameter variable is kept alive in the closure for as long as needed.
-
-It's not necessary that the outer scope be a function—it usually is, but not always—just that there be at least one variable in an outer scope accessed from an inner function:
-
-```js
-for (let [idx, btn] of buttons.entries()) {
-    btn.addEventListener("click", function onClick() {
-        console.log(`Clicked on button (${idx})!`);
-    });
-}
-```
-
-Because this loop is using `let` declarations, each iteration gets new block-scoped (aka, local) `idx` and `btn` variables; the loop also creates a new inner `onClick(..)` function each time. That inner function closes over `idx`, preserving it for as long as the click handler is set on the `btn`. So when each button is clicked, its handler can print its associated index value, because the handler remembers its respective `idx` variable.
-
-Remember: this closure is not over the value (like `1` or `3`), but over the variable `idx` itself.
-
-Closure is one of the most prevalent and important programming patterns in any language. But that's especially true of JS; it's hard to imagine doing anything useful without leveraging closure in one way or another.
-
-If you're still feeling unclear or shaky about closure, the majority of Book 2, _Scope & Closures_ is focused on the topic.
 
 ## `this` Keyword
 
