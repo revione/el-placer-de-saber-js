@@ -9,8 +9,10 @@
 -----
 
 [Table of Contents](toc.md)
-* [ECMA](ECMA.md)
+
 * [Foreword](foreword.md) by [Revi]
+
+* [ECMA](ECMA.md)
 * [Preface](../preface.md)
 * [Chapter 1: What Is JavaScript?](ch1.md)
 * [Chapter 2: Surveying JS](ch2.md)
