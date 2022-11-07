@@ -1,4 +1,4 @@
-# You Don't Know JS Yet: Sync & Async - 2nd Edition
+# I Know JS Yet: Sync & Async - 2nd Edition
 
 | NOTE: |
 | :--- |

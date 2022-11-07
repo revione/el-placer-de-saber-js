@@ -1,4 +1,4 @@
-# You Don't Know JS Yet: Scope & Closures - 2nd Edition
+# I Know JS Yet: Scope & Closures - 2nd Edition
 # Chapter 5: The (Not So) Secret Lifecycle of Variables
 
 By now you should have a decent grasp of the nesting of scopes, from the global scope downward—called a program's scope chain.

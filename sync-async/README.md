@@ -1,4 +1,4 @@
-# You Don't Know JS Yet: Async & Performance - 2nd Edition
+# I Know JS Yet: Async & Performance - 2nd Edition
 
 | NOTE: |
 | :--- |

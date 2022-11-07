@@ -1,4 +1,4 @@
-# You Don't Know JS Yet: Objects & Classes - 2nd Edition
+# I Know JS Yet: Objects & Classes - 2nd Edition
 # Chapter 3: Classy Objects
 
 | NOTE: |

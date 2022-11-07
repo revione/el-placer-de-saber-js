@@ -641,7 +641,7 @@ Now consider using these child classes:
 
 ```js
 var YDKJS = new Book({
-    title: "You Don't Know JS",
+    title: "I Know JS",
     author: "Kyle Simpson",
     publishedOn: "June 2014",
     publisher: "O'Reilly",
@@ -649,7 +649,7 @@ var YDKJS = new Book({
 });
 
 YDKJS.print();
-// Title: You Don't Know JS
+// Title: I Know JS
 // By: Kyle Simpson
 // June 2014
 // Publisher: O'Reilly
@@ -752,7 +752,7 @@ Consider also the usage (aka, "instantiation") of these module factory functions
 
 ```js
 var YDKJS = Book({
-    title: "You Don't Know JS",
+    title: "I Know JS",
     author: "Kyle Simpson",
     publishedOn: "June 2014",
     publisher: "O'Reilly",
@@ -760,7 +760,7 @@ var YDKJS = Book({
 });
 
 YDKJS.print();
-// Title: You Don't Know JS
+// Title: I Know JS
 // By: Kyle Simpson
 // June 2014
 // Publisher: O'Reilly

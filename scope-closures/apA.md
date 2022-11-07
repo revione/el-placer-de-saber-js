@@ -1,4 +1,4 @@
-# You Don't Know JS Yet: Scope & Closures - 2nd Edition
+# I Know JS Yet: Scope & Closures - 2nd Edition
 # Appendix A: Exploring Further
 
 We will now explore a number of nuances and edges around many of the topics covered in the main text of this book. This appendix is optional, supporting material.

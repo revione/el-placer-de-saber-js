@@ -1,4 +1,4 @@
-# You Don't Know JS Yet: ES.Next & Beyond - 2nd Edition
+# I Know JS Yet: ES.Next & Beyond - 2nd Edition
 
 | NOTE: |
 | :--- |

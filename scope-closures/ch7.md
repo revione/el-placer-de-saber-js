@@ -1,4 +1,4 @@
-# You Don't Know JS Yet: Scope & Closures - 2nd Edition
+# I Know JS Yet: Scope & Closures - 2nd Edition
 # Chapter 7: Using Closures
 
 Up to this point, we've focused on the ins and outs of lexical scope, and how that affects the organization and usage of variables in our programs.

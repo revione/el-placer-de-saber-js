@@ -1,4 +1,4 @@
-# You Don't Know JS Yet: Types & Grammar - 2nd Edition
+# I Know JS Yet: Types & Grammar - 2nd Edition
 
 | NOTE: |
 | :--- |

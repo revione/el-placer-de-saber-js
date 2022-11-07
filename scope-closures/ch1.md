@@ -1,4 +1,4 @@
-# You Don't Know JS Yet: Scope & Closures - 2nd Edition
+# I Know JS Yet: Scope & Closures - 2nd Edition
 # Chapter 1: What's the Scope?
 
 By the time you've written your first few programs, you're likely getting somewhat comfortable with creating variables and storing values in them. Working with variables is one of the most foundational things we do in programming!
@@ -11,7 +11,7 @@ Our first step is to uncover how the JS engine processes our program **before** 
 
 ## About This Book
 
-Welcome to book 2 in the *You Don't Know JS Yet* series! If you already finished *Get Started* (the first book), you're in the right spot! If not, before you proceed I encourage you to *start there* for the best foundation.
+Welcome to book 2 in the *I Know JS Yet* series! If you already finished *Get Started* (the first book), you're in the right spot! If not, before you proceed I encourage you to *start there* for the best foundation.
 
 Our focus will be the first of three pillars in the JS language: the scope system and its function closures, as well as the power of the module design pattern.
 
